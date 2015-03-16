@@ -1,0 +1,14 @@
+---
+- name: create ec2 elastic load balancer
+  ec2_elb_lb:
+    name: "{{ name }}"
+    health_check: "{{ health_check }}"
+    listeners: "{{ listeners }}"
+    region: "{{ region }}"
+    scheme: "{{ scheme }}"
+    security_group_ids: "{{ security_group_ids }}"
+    state: "{{ state }}"
+    subnets: "{{ subnets }}"
+  register: ec2_elb_lb_info
+
+- debug: var=ec2_elb_lb_info
