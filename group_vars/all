@@ -13,6 +13,7 @@ rhel7_ami_id: ami-25158352
 image: ami-25158352
 instance_type: t2.micro
 keypair: cake.aws
+key_name: cake.aws
 count_tag: 
   Name: TestAnsible
 exact_count: 1

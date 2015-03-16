@@ -1,7 +1,6 @@
 ---
 - name: create ec2 secgroup
-  local_action:
-    module: ec2_group
+  ec2_group:
     description: "{{ description }}"
     name: "{{ name }}"
     region: "{{ region }}"

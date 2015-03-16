@@ -19,8 +19,36 @@
         group_name: 'elb secgroup'
 
   roles:
-    - { role: ec2-secgroups, name: 'elb secgroup', description: 'elb secgroup', rules: "{{ elb_secgroup_rules }}" }
-    - { role: ec2-secgroups, name: 'instance secgroup', description: 'instance secgroup', rules: "{{ instance_secgroup_rules }}" }
+    -
+      role: ec2-secgroups
+      name: 'elb secgroup'
+      description: 'elb secgroup'
+      rules: "{{ elb_secgroup_rules }}"
+    -
+      role: ec2-secgroups
+      name: 'instance secgroup'
+      description: 'instance secgroup'
+      rules: "{{ instance_secgroup_rules }}"
+    -
+      role: ec2-launchconfig
+      name: 'ghes launchconfig'
+      image_id: 'ami-25158352'
+      instance_monitoring: 'yes'
+      instance_type: 't2.micro'
+      security_groups: ['sg-989ae3fd'] # FIXME - lookup secgroup ID dynamically.
+    -
+      role: ec2-autoscaling
+      name: 'ghes asg'
+      availability_zones: [ 'eu-west-1a' ]
+      desired_capacity: '1'
+      max_size: '1'
+      min_size: '1'
+      launch_config_name: 'ghes launchconfig'
+      vpc_zone_identifier: [ 'subnet-341ece6d' ]
+      # Tags are currently broken in Ansible ASG implementation
+      # https://github.com/ansible/ansible-modules-core/issues/744
+      #tags:
+      #  - Name: 'GHES Ansible'
+      #    propagate_at_launch: yes
     #- ec2-elb
-    #- ec2-autoscaling
     #- cloudwatch-alarm

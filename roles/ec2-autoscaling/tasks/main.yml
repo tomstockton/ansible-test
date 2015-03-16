@@ -1,0 +1,17 @@
+---
+- name: create ec2 autoscaling group
+  ec2_asg:
+    name: "{{ name }}"
+    availability_zones: "{{ availability_zones }}"
+    desired_capacity: "{{ desired_capacity }}"
+    launch_config_name: "{{ launch_config_name }}"
+    load_balancers: "{{ load_balancers | default(omit) }}"
+    max_size: "{{ max_size }}"
+    min_size: "{{ min_size }}"
+    region: "{{ region }}"
+    state: "{{ state }}"
+    tags: "{{ tags | default(omit) }}"
+    vpc_zone_identifier: "{{ vpc_zone_identifier }}"
+  register: ec2_asg_info
+
+- debug: var=ec2_asg_info

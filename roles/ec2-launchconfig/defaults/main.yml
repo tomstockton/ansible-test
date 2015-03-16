@@ -1,0 +1,4 @@
+---
+assign_public_ip: no
+instance_monitoring: no
+state: present
