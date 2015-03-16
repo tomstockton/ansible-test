@@ -1,0 +1,26 @@
+# Variables listed here are applicable to all host groups
+group_description: 'Ansible SecGroup'
+group_name: 'Ansible SecGroup'
+vpc_id: 'vpc-f504dc90'
+vpc_subnet: 'subnet-341ece6d'
+group_rules:
+  - proto: tcp
+    from_port: 22
+    to_port: 22
+    cidr_ip: 0.0.0.0/0
+
+rhel7_ami_id: ami-25158352
+image: ami-25158352
+instance_type: t2.micro
+keypair: cake.aws
+count_tag: 
+  Name: TestAnsible
+exact_count: 1
+instance_tags:
+  Name: TestAnsible
+region: eu-west-1
+group: TBD
+user_data: "#!/bin/bash \n
+            yum -y update"
+
+eip_in_vpc: yes

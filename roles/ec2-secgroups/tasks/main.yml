@@ -1,0 +1,12 @@
+---
+- name: create ec2 secgroup
+  local_action:
+    module: ec2_group
+    description: "{{ description }}"
+    name: "{{ name }}"
+    region: "{{ region }}"
+    rules: "{{ rules }}"
+    vpc_id: "{{ vpc_id }}"
+  register: ec2_group_info
+
+- debug: var=ec2_group_info

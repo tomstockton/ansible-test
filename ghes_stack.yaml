@@ -1,0 +1,26 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars:
+    elb_secgroup_rules:
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        cidr_ip: 0.0.0.0/0
+    instance_secgroup_rules:
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        group_name: 'elb secgroup'
+
+  roles:
+    - { role: ec2-secgroups, name: 'elb secgroup', description: 'elb secgroup', rules: "{{ elb_secgroup_rules }}" }
+    - { role: ec2-secgroups, name: 'instance secgroup', description: 'instance secgroup', rules: "{{ instance_secgroup_rules }}" }
+    #- ec2-elb
+    #- ec2-autoscaling
+    #- cloudwatch-alarm
